@@ -58,7 +58,7 @@ namespace RiskmasterWcediFTP
     class Program
         {
         public static ExecutableFunctions executableFunction;
-        public static string appSettingsFilePath ;
+        public static string appSettingsFilePath;
         public static System.Configuration.AppSettingsSection appSettings;
         public static string BatchId = null;
         //public static Parser commandLineParser;
@@ -102,7 +102,7 @@ namespace RiskmasterWcediFTP
                 WinSCPRunner winSCPRunner = new WinSCPRunner();
                 if (!string.IsNullOrEmpty(Program.BatchId))
                     {
-  
+
                     winSCPRunner.BatchId = BatchId;
                     }
                 if (winSCPRunner != null)

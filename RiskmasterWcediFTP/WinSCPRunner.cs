@@ -337,9 +337,9 @@ namespace RiskmasterWcediFTP
 
             string wcediPDFOutputDirectory = Program.appSettings.Settings["WCediBatchPDFOutputDirectory"].Value;
             string wcediPdfBatchDirectory = wcediPDFOutputDirectory + Path.DirectorySeparatorChar + BatchId;
-            string txtFileToFTP = wcediLocalFTPDirectory + Path.DirectorySeparatorChar + "cok_wcedi" + currentDateTimeString + ".txt";
+            string txtFileToFTP = wcediLocalFTPDirectory + Path.DirectorySeparatorChar + "cok_wcedi_" + currentDateTimeString + ".txt";
 
-            string zipFileToFTP = wcediLocalFTPDirectory + Path.DirectorySeparatorChar + "cok_wcedi" + currentDateTimeString + ".zip";
+            string zipFileToFTP = wcediLocalFTPDirectory + Path.DirectorySeparatorChar + "cok_wcedi_" + currentDateTimeString + ".zip";
 
             string[] pdfFilesToZip = Directory.GetFiles(wcediPdfBatchDirectory, "*.pdf");
 
@@ -367,13 +367,13 @@ namespace RiskmasterWcediFTP
                 transferOptions.TransferMode = WinSCP.TransferMode.Binary;
                 transferOptions.OverwriteMode = WinSCP.OverwriteMode.Overwrite;
                 transferOptions.PreserveTimestamp = true;
-                string txtFileToArchive = archiveDirectory + Path.DirectorySeparatorChar + "cok_" + currentDateTimeString + "_wcedi.txt";
+                string txtFileToArchive = archiveDirectory + Path.DirectorySeparatorChar + "cok_wcedi_" + currentDateTimeString + ".txt";
 
-                string zipFileToArchive = archiveDirectory + Path.DirectorySeparatorChar + "cok_" + currentDateTimeString + "_wcedi.zip";
+                string zipFileToArchive = archiveDirectory + Path.DirectorySeparatorChar + "cok_wcedi_" + currentDateTimeString + ".zip";
 
                 File.Copy(txtFileToFTP, txtFileToArchive, true);
                 File.Copy(zipFileToFTP, zipFileToArchive, true);
-                strWriter.WriteLine("Copied " + txtFileToFTP + " to " + archiveDirectory);
+                strWriter.WriteLine("Copied " + txtFileToFTP + " to " + txtFileToArchive);
                 /* capture console/standard out from the ftp session to a string to be written after all is done */
 
                 Console.SetOut(strWriter);
