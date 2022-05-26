@@ -197,7 +197,6 @@ namespace RiskmasterWcediFTP
                         SshPrivateKeyPath = Program.appSettings.Settings["SshPrivateKeyPath"].Value
                         };
 
-                    // sessionOptions.GiveUpSecurityAndAcceptAnyTlsHostCertificate = true;
                     }
                 else
                     {
@@ -211,16 +210,17 @@ namespace RiskmasterWcediFTP
 
                         SshHostKeyFingerprint = Program.appSettings.Settings["SshHostKeyFingerprint"].Value,
                         };
-                    sessionOptions.GiveUpSecurityAndAcceptAnySshHostKey = true;
+
                     }
                 }
-            System.Console.WriteLine(sessionOptions.FtpMode.ToString() + " " + sessionOptions.HostName + " " + sessionOptions.UserName + " " + sessionOptions.Password + " " + sessionOptions.PortNumber + " " + sessionOptions.SshHostKeyFingerprint + " " + sessionOptions.FtpSecure.ToString());
+
                  
             char separator = System.IO.Path.DirectorySeparatorChar;
             string loggingDirectoryPath = Program.appSettings.Settings["LoggingDirectoryPath"].Value;
             String logFilepath = String.Format("{0}{1}{2}", loggingDirectoryPath, System.IO.Path.DirectorySeparatorChar, fileName);
             session.SessionLogPath = logFilepath;
             session.DisableVersionCheck = true;
+            session.ExecutablePath = Program.appSettings.Settings["ExecutablePath"].Value;																									
             bool sessionOpen = false;
             int sessionErrors = 0;
             int sleepInMilliseconds = 500;
