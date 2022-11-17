@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "RiskmasterWcediFTP": {
+      "commandName": "Project",
+      "commandLineArgs": "-o -c C:\\Users\\rwaltz\\Documents\\GitProjects\\RiskmasterWcediFTP\\RiskmasterWcediFTP\\bin\\Release\\net6.0\\publish\\win-x64\\SessionOptions.config",
+      "workingDirectory": "C:\\Users\\rwaltz\\Documents\\GitProjects\\RiskmasterWcediFTP\\RiskmasterWcediFTP\\bin\\Release\\net6.0\\publish\\win-x64"
+    }
+  }
+}

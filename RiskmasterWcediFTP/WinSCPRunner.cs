@@ -33,17 +33,6 @@ namespace RiskmasterWcediFTP
         private string batchId;
         public string BatchId { get => batchId; set => batchId = value; }
 
-        public WinSCPRunner()
-            {
-
-            }
-
-        public WinSCPRunner(string batchID)
-            {
-            BatchId = batchID;
-            }
-
-
         /* 
         * runWinSCP will evaulate which FTP method to run 
         * Establish an FTP connection to Riskmaster
@@ -219,7 +208,7 @@ namespace RiskmasterWcediFTP
             string loggingDirectoryPath = Program.appSettings.Settings["LoggingDirectoryPath"].Value;
             String logFilepath = String.Format("{0}{1}{2}", loggingDirectoryPath, System.IO.Path.DirectorySeparatorChar, fileName);
             session.SessionLogPath = logFilepath;
-            session.DisableVersionCheck = true;
+           
             session.ExecutablePath = Program.appSettings.Settings["ExecutablePath"].Value;																									
             bool sessionOpen = false;
             int sessionErrors = 0;
@@ -286,6 +275,10 @@ namespace RiskmasterWcediFTP
         /* download files to a Shared Directory from  Riskmaster for the Riskmaster Payments to Orbit interface based on configurable values */
         private string runOrbitImportFTP(Session ftpSession)
             {
+            string orbitImportRemoteDirectory = Program.appSettings.Settings["OrbitImportRemoteDirectory"].Value;
+           
+            string orbitImportLocalDirectory = Program.appSettings.Settings["OrbitImportLocalDirectory"].Value;
+
             System.IO.StringWriter strWriter = new System.IO.StringWriter();
             strWriter.WriteLine("BEGIN runOrbitImportFTP " + currentenUSDateTimeString);
             TransferOptions transferOptions = new TransferOptions();
@@ -294,8 +287,10 @@ namespace RiskmasterWcediFTP
             transferOptions.FileMask = "*.csv";
             transferOptions.PreserveTimestamp = true;
 
-            String orbitImportRemoteDirectory = Program.appSettings.Settings["OrbitImportRemoteDirectory"].Value;
-            String orbitImportLocalDirectory = Program.appSettings.Settings["OrbitImportLocalDirectory"].Value;
+
+
+            
+            
 
             /* capture console/standard out from the ftp session to a string to be written after all is done */
 
@@ -305,6 +300,7 @@ namespace RiskmasterWcediFTP
             // validate and standardize any downloaded filenames
             string[] riskmasterFileList = Directory.GetFiles(orbitImportLocalDirectory, "*.csv");
             strWriter.WriteLine("runOrbitImportFTP found in  " + orbitImportLocalDirectory + " " + string.Join(", ", riskmasterFileList));
+            string cvsFilesDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
             foreach (string riskmasterFile in riskmasterFileList)
                 {
                 // Make certain that the files conform to a pattern of P(d|f|b)\d5_\d7.csv
@@ -312,7 +308,7 @@ namespace RiskmasterWcediFTP
                     {
                     // rename the file to 
                     string basefileName = Path.GetFileNameWithoutExtension(riskmasterFile);
-                    string newFilename = basefileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+                    string newFilename = basefileName + "_" + cvsFilesDateTime + ".csv";
                     string newRiskmasterFile = Path.Combine(orbitImportLocalDirectory, newFilename);
                     File.Move(riskmasterFile, newRiskmasterFile);
                     }
