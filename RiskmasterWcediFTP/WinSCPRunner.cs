@@ -300,7 +300,7 @@ namespace RiskmasterWcediFTP
             // validate and standardize any downloaded filenames
             string[] riskmasterFileList = Directory.GetFiles(orbitImportLocalDirectory, "*.csv");
             strWriter.WriteLine("runOrbitImportFTP found in  " + orbitImportLocalDirectory + " " + string.Join(", ", riskmasterFileList));
-            string cvsFilesDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+
             foreach (string riskmasterFile in riskmasterFileList)
                 {
                 // Make certain that the files conform to a pattern of P(d|f|b)\d5_\d7.csv
@@ -308,7 +308,7 @@ namespace RiskmasterWcediFTP
                     {
                     // rename the file to 
                     string basefileName = Path.GetFileNameWithoutExtension(riskmasterFile);
-                    string newFilename = basefileName + "_" + cvsFilesDateTime + ".csv";
+                    string newFilename = basefileName + "_" + currentDateTimeString + ".csv";
                     string newRiskmasterFile = Path.Combine(orbitImportLocalDirectory, newFilename);
                     File.Move(riskmasterFile, newRiskmasterFile);
                     }
